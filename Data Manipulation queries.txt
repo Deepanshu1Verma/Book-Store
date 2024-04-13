@@ -1,0 +1,23 @@
+1. Write a query to select all books by a particular author and sort them by price in descending order: 
+    select * from books where AuthorID=1 order by Price desc;
+
+
+2. List all orders made by a particular customer, showing the order and total amount: 
+
+    To show the TotalAmount of all the orders of one customer in descending order:
+        Select TotalAmount from orders where customerID=1 order by  TotalAmount desc;
+
+    To show details of all the orders of one customer:
+        SELECT * 
+            FROM OrderDetails 
+            WHERE OrderID IN (
+                SELECT OrderID 
+                FROM Orders 
+                WHERE CustomerID = 1
+            );
+
+    To join the column 'TotalAmount' from 'Orders' table and all columns from 'OrderDetails' in the mysql:
+        SELECT od.*, o.TotalAmount
+            FROM OrderDetails od
+            JOIN Orders o ON od.OrderID = o.OrderID
+            WHERE o.CustomerID = 1 order by  TotalAmount desc;

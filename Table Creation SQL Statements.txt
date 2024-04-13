@@ -1,0 +1,107 @@
+1. To create a table for 'Authors':
+        CREATE TABLE Authors (
+            AuthorID INT PRIMARY KEY AUTO_INCREMENT,
+            FirstName VARCHAR(255),
+            LastName VARCHAR(255)
+        );
+
+        This will look like in java string as: "CREATE TABLE " + authorsTable + " ( " + authorID + " INT PRIMARY KEY AUTO_INCREMENT," + firstName + " VARCHAR(255)," + lastName + " VARCHAR(255));";
+
+
+2. To create 'Genres' table:
+        CREATE TABLE Genres (
+            GenreID INT PRIMARY KEY AUTO_INCREMENT,
+            GenreName VARCHAR(255)
+        );
+
+        This will lool like in java string as: ""CREATE TABLE " + genresTable + " (" + genreID + " INT PRIMARY KEY AUTO_INCREMENT," + genreName + " VARCHAR(255));";"
+
+3. To create 'Customers' table:
+        CREATE TABLE Customers (
+            CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+            FirstName VARCHAR(255),
+            LastName VARCHAR(255),
+            Email VARCHAR(255),
+            Address VARCHAR(255)
+        );
+
+        This will lool like in java string as: "CREATE TABLE " + customerTable + " (" + customerID + " INT PRIMARY KEY AUTO_INCREMENT," + firstName + " VARCHAR(255)," + lastName + " VARCHAR(255)," + email + " VARCHAR(255)," + address + " VARCHAR(255));";
+
+
+4. To create 'Orders' table:
+        CREATE TABLE Orders (
+            OrderID INT PRIMARY KEY AUTO_INCREMENT,
+            CustomerID INT,
+            OrderDate DATE,
+            TotalAmount DECIMAL(10, 2),
+            FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+        );
+        
+        This will lool like in java string as: "CREATE TABLE " + orderTable + "(" + orderID + " INT PRIMARY KEY AUTO_INCREMENT," + customerID + " INT," + orderDate + " DATE," + totalAmount + " DECIMAL(10, 2), FOREIGN KEY (" + customerID + ") REFERENCES " + customerTable + "(" + customerID + "));";
+
+
+5. To create 'Payments' table:
+        CREATE TABLE Payments (
+            PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+            OrderID INT,
+            PaymentDate DATE,
+            Amount DECIMAL(10, 2),
+            PaymentMethod VARCHAR(50),
+            FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+        );
+
+    This will lool like in java string as: "CREATE TABLE " + paymentsTable + " (" + paymentID + " INT PRIMARY KEY AUTO_INCREMENT," + orderID + " INT," + paymentDate + " DATE," + amount + " DECIMAL(10, 2)," + paymentMethod + " VARCHAR(50), FOREIGN KEY (" + orderID + ") REFERENCES " + orderTable + "(" + orderID + "));";
+
+6. To create 'Publishers' table:
+        CREATE TABLE Publishers (
+            PublisherID INT PRIMARY KEY AUTO_INCREMENT,
+            PublisherName VARCHAR(255),
+            Address VARCHAR(255)
+        );
+
+    This will lool like in java string as: "CREATE TABLE " + publishersTable + " (" + publisherID + " INT PRIMARY KEY AUTO_INCREMENT," + publisherName + " VARCHAR(255)," + address + " VARCHAR(255));";
+
+7. To create 'Books' table:
+        CREATE TABLE Books (
+            BookID INT PRIMARY KEY AUTO_INCREMENT,
+            ISBN VARCHAR(30),
+            Title VARCHAR(255),
+            AuthorID INT,
+            FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID),
+            GenreID INT,
+            PublisherID INT,
+            PublicationDate DATE,
+            Price DECIMAL(10, 2),
+            StockQuantity INT,
+            FOREIGN KEY (GenreID) REFERENCES Genres(GenreID),
+            FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID)
+        );
+
+    This will lool like in java string as: "CREATE TABLE " + booksTable + " (" + bookID + " INT PRIMARY KEY AUTO_INCREMENT," + isbn + " VARCHAR(30)," + title + " VARCHAR(255)," + authorID + " INT, FOREIGN KEY (" + authorID + ") REFERENCES " + authorsTable + "(" + authorID + ")," + genreID + " INT," + publisherID + " INT," + publicationDate + " DATE," + price + " DECIMAL(10, 2)," + stockQuantity + " INT, FOREIGN KEY (" + genreID + ") REFERENCES " + genresTable + "(" + genreID + "), FOREIGN KEY (" + publisherID + ") REFERENCES " + publishersTable + "(" + publisherID + "));";
+
+8. To create 'OrderDetails' table:
+        CREATE TABLE OrderDetails (
+            OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,
+            OrderID INT,
+            BookID INT,
+            Quantity INT,
+            Price DECIMAL(10, 2),
+            FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+            FOREIGN KEY (BookID) REFERENCES Books(BookID)
+        );
+
+    This will lool like in java string as: "CREATE TABLE " + orderDetailsTable + " (" + orderDetailID + " INT PRIMARY KEY AUTO_INCREMENT," + orderID + " INT," + bookID + " INT," + quantity + " INT," + price + " DECIMAL(10, 2), FOREIGN KEY (" + orderID + ") REFERENCES Orders(" + orderID + "), FOREIGN KEY (" + bookID + ") REFERENCES " + booksTable + "(" + bookID + "));";
+
+9. To create Reviews table:
+        CREATE TABLE Reviews (
+            ReviewID INT PRIMARY KEY AUTO_INCREMENT,
+            BookID INT,
+            CustomerID INT,
+            Rating DECIMAL(2, 1),
+            Comment TEXT,
+            ReviewDate DATE,
+            FOREIGN KEY (BookID) REFERENCES Books(BookID),
+            FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+        );
+
+    This will lool like in java string as: "CREATE Table " + reviewsTable + " (" + reviewID + " INT PRIMARY KEY AUTO_INCREMENT," + bookID + " INT," + customerID + " INT," + rating + " DECIMAL(2, 1)," + comment + " TEXT," + reviewDate + " DATE, FOREIGN KEY (" + bookID + ") REFERENCES Books(" + bookID + "), FOREIGN KEY (" + customerID + ") REFERENCES Customers(" + customerID + "));";
